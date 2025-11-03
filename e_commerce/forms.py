@@ -1,5 +1,5 @@
 """
-Forms for the SÎKÂ e-commerce platform.
+Formulaires pour la plateforme e-commerce SÎKÂ.
 """
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -10,7 +10,7 @@ from .models import (
 
 
 class CustomUserCreationForm(UserCreationForm):
-    """Custom registration form with seller option."""
+    """Formulaire d'inscription personnalisé avec option vendeur."""
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={
@@ -54,7 +54,7 @@ class CustomUserCreationForm(UserCreationForm):
         })
     )
     
-    # Seller option
+    # Option vendeur
     become_seller = forms.BooleanField(
         required=False,
         label='Devenir vendeur',
@@ -64,7 +64,7 @@ class CustomUserCreationForm(UserCreationForm):
         })
     )
     
-    # Privacy policy acceptance
+    # Acceptation de la politique de confidentialité
     accept_privacy = forms.BooleanField(
         required=True,
         label='J\'accepte les conditions de confidentialité',
@@ -74,7 +74,7 @@ class CustomUserCreationForm(UserCreationForm):
         })
     )
     
-    # Seller-specific fields (only shown when become_seller is checked)
+    # Champs spécifiques aux vendeurs (affichés uniquement si become_seller est coché)
     store_name = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
@@ -134,12 +134,12 @@ class CustomUserCreationForm(UserCreationForm):
         become_seller = cleaned_data.get('become_seller')
         accept_privacy = cleaned_data.get('accept_privacy')
         
-        # Validate privacy policy acceptance
+        # Valider l'acceptation de la politique de confidentialité
         if not accept_privacy:
             raise ValidationError('Vous devez accepter les conditions de confidentialité pour créer un compte.')
         
         if become_seller:
-            # Validate seller-specific fields when become_seller is checked
+            # Valider les champs spécifiques aux vendeurs lorsque become_seller est coché
             store_name = cleaned_data.get('store_name')
             store_description = cleaned_data.get('store_description')
             store_phone = cleaned_data.get('store_phone')
@@ -164,7 +164,7 @@ class CustomUserCreationForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         user.is_email_verified = False
         
-        # Set seller status and fields if become_seller is checked
+        # Définir le statut vendeur et les champs si become_seller est coché
         if self.cleaned_data.get('become_seller'):
             user.is_seller = True
             user.store_name = self.cleaned_data['store_name']
@@ -179,7 +179,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    """Login form."""
+    """Formulaire de connexion."""
     username = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -195,7 +195,7 @@ class LoginForm(forms.Form):
 
 
 class SellerRequestForm(forms.ModelForm):
-    """Form for seller registration request."""
+    """Formulaire de demande d'inscription vendeur."""
     class Meta:
         model = SellerRequest
         fields = ['store_name', 'description', 'phone', 'address']
@@ -222,9 +222,9 @@ class SellerRequestForm(forms.ModelForm):
 
 
 class ProductForm(forms.ModelForm):
-    """Form for creating/editing products."""
-    # Note: additional_images is handled in the template as a regular HTML input
-    # with multiple attribute, not as a Django form field
+    """Formulaire de création/édition de produits."""
+    # Note : additional_images est géré dans le template comme un input HTML standard
+    # avec l'attribut multiple, et non comme un champ de formulaire Django
     additional_images = forms.FileField(
         required=False,
         widget=forms.FileInput(attrs={
@@ -237,7 +237,7 @@ class ProductForm(forms.ModelForm):
         fields = [
             'name', 'description', 'price', 'image', 'category',
             'tags', 'stock', 'is_active'
-            # Note: slug is auto-generated, not in form
+            # Note : le slug est auto-généré, pas dans le formulaire
         ]
         widgets = {
             'name': forms.TextInput(attrs={
@@ -272,7 +272,7 @@ class ProductForm(forms.ModelForm):
 
 
 class CategoryForm(forms.ModelForm):
-    """Form for creating/editing categories."""
+    """Formulaire de création/édition de catégories."""
     class Meta:
         model = Category
         fields = ['name', 'description']
@@ -290,7 +290,7 @@ class CategoryForm(forms.ModelForm):
 
 
 class CartItemForm(forms.ModelForm):
-    """Form for updating cart item quantity."""
+    """Formulaire de mise à jour de la quantité d'un article du panier."""
     class Meta:
         model = CartItem
         fields = ['quantity']
@@ -312,7 +312,7 @@ class CartItemForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
-    """Form for placing an order."""
+    """Formulaire de passage de commande."""
     mobile_money_provider = forms.ChoiceField(
         choices=[
             ('', 'Sélectionner un opérateur'),
@@ -327,7 +327,7 @@ class OrderForm(forms.ModelForm):
         })
     )
     
-    # Credit card fields
+    # Champs de carte de crédit
     card_number = forms.CharField(
         required=False,
         max_length=19,
@@ -365,7 +365,7 @@ class OrderForm(forms.ModelForm):
         })
     )
     
-    # Mobile money phone number
+    # Numéro de téléphone Mobile Money
     mobile_money_phone = forms.CharField(
         required=False,
         max_length=20,
@@ -426,7 +426,7 @@ class OrderForm(forms.ModelForm):
 
 
 class ContactForm(forms.Form):
-    """Simple contact form."""
+    """Formulaire de contact simple."""
     name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Votre nom complet'
     }))
@@ -442,7 +442,7 @@ class ContactForm(forms.Form):
 
 
 class ProductReviewForm(forms.ModelForm):
-    """Form for product reviews."""
+    """Formulaire d'avis sur les produits."""
     class Meta:
         model = ProductReview
         fields = ['rating', 'comment']

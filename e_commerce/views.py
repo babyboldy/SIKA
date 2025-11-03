@@ -1,5 +1,5 @@
 """
-Views for the SÎKÂ e-commerce platform.
+Vues pour la plateforme e-commerce SÎKÂ.
 """
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
@@ -234,7 +234,7 @@ def verify_email(request, user_id, token):
         try:
             uid = int(user_id)
         except (TypeError, ValueError):
-            uid = user_id  # Fallback si UUID dans une config personnalisée
+            uid = user_id  # Solution de secours si UUID dans une config personnalisée
         
         # Récupérer l'utilisateur
         user = User.objects.get(id=uid)
@@ -785,10 +785,19 @@ def become_seller(request):
             seller_request = form.save(commit=False)
             seller_request.user = request.user
             seller_request.save()
+            
+            # Envoyer un email à l'admin pour notification
+            from .utils import send_seller_request_to_admin, send_seller_request_confirmation
+            send_seller_request_to_admin(request.user, seller_request, request)
+            
+            # Envoyer un email de confirmation au client
+            send_seller_request_confirmation(request.user, seller_request)
+            
             messages.success(
                 request,
                 'Demande soumise avec succès! '
-                'Vous recevrez un email une fois la décision prise.'
+                'Vous avez reçu un email de confirmation. '
+                'Vous recevrez un autre email une fois la décision prise.'
             )
             return redirect('e_commerce:seller_request_status')
     else:

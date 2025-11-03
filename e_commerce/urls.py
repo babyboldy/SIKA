@@ -1,5 +1,5 @@
 """
-URL configuration for e_commerce app.
+Configuration des URLs pour l'application e_commerce.
 """
 from django.urls import path
 from django.conf import settings
@@ -10,19 +10,19 @@ from . import views
 app_name = 'e_commerce'
 
 urlpatterns = [
-    # Home and products
+    # Accueil et produits
     path('', views.home, name='home'),
     path('products/', views.product_list, name='product_list'),
     path('products/<slug:slug>/', views.ProductDetailView.as_view(),
          name='product_detail'),
     
-    # Authentication
+    # Authentification
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('profile/', views.profile, name='profile'),
     
-    # Password Reset
+    # Réinitialisation du mot de passe
     path('password-reset/', auth_views.PasswordResetView.as_view(
         template_name='registration/password_reset_form.html',
         email_template_name='registration/password_reset_email.html',
@@ -40,13 +40,13 @@ urlpatterns = [
         template_name='registration/password_reset_complete.html'
     ), name='password_reset_complete'),
     
-    # Email Verification
+    # Vérification de l'email
     path('verify-email/<int:user_id>/<str:token>/', views.verify_email, name='verify_email'),
     path('verification-sent/', views.verification_sent, name='verification_sent'),
-    # Compatibility path for emails that use users/activate/... pattern
+    # Chemin de compatibilité pour les emails utilisant le pattern users/activate/...
     path('users/activate/<str:user_id>/<str:token>/', views.verify_email, name='verify_email_compat'),
     
-    # Cart
+    # Panier
     path('cart/', views.cart, name='cart'),
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/update/<int:item_id>/', views.update_cart_item,
@@ -54,23 +54,23 @@ urlpatterns = [
     path('cart/remove/<int:item_id>/', views.remove_from_cart,
          name='remove_from_cart'),
     
-    # Orders
+    # Commandes
     path('checkout/', views.checkout, name='checkout'),
     path('orders/', views.my_orders, name='my_orders'),
     path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
     path('order-confirmation/<int:order_id>/', views.order_confirmation,
          name='order_confirmation'),
     
-    # Wishlist
+    # Liste de souhaits
     path('wishlist/', views.wishlist, name='wishlist'),
     path('wishlist/add/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('wishlist/remove/<int:product_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('wishlist/toggle/<int:product_id>/', views.toggle_wishlist, name='toggle_wishlist'),
     
-    # Reviews
+    # Avis
     path('products/<int:product_id>/review/', views.submit_review, name='submit_review'),
     
-    # Seller
+    # Vendeur
     path('become-seller/', views.become_seller, name='become_seller'),
     path('seller-request-status/', views.seller_request_status,
          name='seller_request_status'),
@@ -86,7 +86,7 @@ urlpatterns = [
     path('seller/category/create/', views.create_category, name='create_category'),
     path('seller/tag/create/', views.create_tag, name='create_tag'),
     
-    # Static pages
+    # Pages statiques
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),

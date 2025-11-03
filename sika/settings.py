@@ -13,17 +13,17 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Construire les chemins dans le projet comme ceci : BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# Paramètres de développement rapide - non adaptés à la production
+# Voir https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# AVERTISSEMENT SÉCURITÉ : gardez la clé secrète utilisée en production secrète !
 SECRET_KEY = 'django-insecure-qhu!ujuo%17cdl7#=pyy$%7v8*otg1gi3$o^7p!$4zwe4js&jf'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# AVERTISSEMENT SÉCURITÉ : ne pas exécuter avec debug activé en production !
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -240,7 +240,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Email configuration
+# Configuration de l'email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -251,11 +251,11 @@ EMAIL_HOST_PASSWORD = (
 )  # À remplacer par le mot de passe
 DEFAULT_FROM_EMAIL = 'majokossonou@gmail.com'
 
-# Login URLs
+# URLs de connexion
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Session Configuration
-SESSION_COOKIE_AGE = 86400  # 24 hours
+# Configuration de la session
+SESSION_COOKIE_AGE = 86400  # 24 heures
 SESSION_SAVE_EVERY_REQUEST = True

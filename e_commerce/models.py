@@ -1,5 +1,5 @@
 """
-Models for the SÎKÂ e-commerce platform.
+Modèles pour la plateforme e-commerce SÎKÂ.
 
 Ce module contient tous les modèles de données pour la plateforme e-commerce SÎKÂ,
 permettant la gestion des utilisateurs, produits, commandes, paniers, etc.

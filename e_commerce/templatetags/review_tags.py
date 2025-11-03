@@ -1,5 +1,5 @@
 """
-Template tags for product reviews.
+Tags de template pour les avis produits.
 """
 from django import template
 from django.utils.safestring import mark_safe
@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.simple_tag
 def show_stars(rating):
-    """Generate star rating."""
+    """Génère l'affichage des étoiles pour la notation."""
     html = ''
     for i in range(1, 6):
         if i <= rating:
